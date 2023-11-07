@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img src="docs/img/icon.png" alt="getusee" width="200">
+  <img src="docs/img/icon.png" alt="getusee" width="239">
   <br>Getusee
 </h1>
 
@@ -14,17 +14,20 @@
   </a>
 </p>
 
+## Introduction
 
-## Steps:
+This project is to quickly develop some automated web page tests and small tools such as automated web page data
+acquisition based on the selenium package (data acquisition is not as efficient as the direct request package). But 'Life
+is short, use python', it can save you the time of matching software such as chrome driver, and you can use it
+directly.
 
-- First make sure to install [Clash]((https://github.com/Dreamacro/clash)) and enable the agent
-- Then check the [controller port of Clash](https://dreamacro.github.io/clash/zh_CN/runtime/external-controller.html), which is usually located in the controller-port in the proxy file, and modify the config.py file.
-- Finally determine the csv column to be translated, the translated language and the output address.
+## Template
+TOFIX
 
 ### Related github repository
 
-- [Clash](https://github.com/Dreamacro/clash)
- 
+- [selenium](https://selenium-python-zh.readthedocs.io/en/latest/installation.html)
+
 ### Songs🎶
 
-[Haggstrom --minecraft](https://www.youtube.com/watch?v=laZusNy8QiY)
+[Undertale --undertale](https://www.youtube.com/watch?v=8CeYNJ-s0Kw)
