@@ -11,9 +11,14 @@ import subprocess
 # chrome.exe --remote-debugging-port=9222 --user-data-dir="C:\selenum\AutomationProfile"
 
 class smart_driver(object):
+    by_choices = {'id': By.ID,
+                  'class': By.CLASS_NAME,
+                  'css': By.CSS_SELECTOR,
+                  'xpath': By.XPATH}
+
     def __init__(self, debug: bool = True, invisible: bool = True, port: str = '9222'):
         super(smart_driver, self).__init__()
-        port = str(port)
+        self.port = str(port)
         self.debug = debug
         self.options = webdriver.ChromeOptions()
         self.chrome_options = webdriver.ChromeOptions()
@@ -36,6 +41,9 @@ class smart_driver(object):
                 subprocess.Popen(chrome_cmd)
                 self.options.add_experimental_option("debuggerAddress", f"127.0.0.1:{port}")
                 self.driver = webdriver.Chrome(options=self.options)
+
+    def __repr__(self):
+        return f'Chrome Driver in {self.port}'
 
     def get_url(self, url: str):
         """
@@ -148,11 +156,19 @@ class smart_driver(object):
         soup = BeautifulSoup(page_source, 'lxml')
         return soup
 
-    def sniff(self, value, by: By):
-        return self.driver.find_element(value=value, by=by)
+    def sniff(self, value, by):
+        b = self.by_choices.get(by)
+        return self.driver.find_element(value=value, by=b)
+
+    def sniffs(self, value, by):
+        b = self.by_choices.get(by)
+        return self.driver.find_elements(value=value, by=b)
 
     def enter_iframe(self, index):
         self.driver.switch_to.frame(index)
+
+    def roll(self, direct, level=0):
+        self.driver.execute_script(f'window.scrollBy({level},{direct})')
 
     def bye(self):
         """
