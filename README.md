@@ -21,6 +21,13 @@ acquisition based on the selenium package (data acquisition is not as efficient 
 is short, use python', it can save you the time of matching software such as chrome driver, and you can use it
 directly.
 
+## Start process
+<span>*The process in blue font still needs to be implemented manually</span>
+<p align="center" style="background-color:#FFFFFF;">
+  <img src="docs/img/process.png" alt="process">
+</p>
+
+
 ## Template
 TOFIX
 
