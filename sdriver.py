@@ -170,6 +170,11 @@ class smart_driver(object):
     def roll(self, direct, level=0):
         self.driver.execute_script(f'window.scrollBy({level},{direct})')
 
+    def roll_to(self, ele_text):
+        # scroll_add_crowd_button = driver.find_element_by_xpath(xpath_button_add_crowd)
+        ele = self.driver.find_element(By.CSS_SELECTOR,ele_text)
+        self.driver.execute_script("arguments[0].scrollIntoView();", ele)
+
     def bye(self):
         """
         Quits the web browser driver, closing all associated windows.
