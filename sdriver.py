@@ -1,6 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from bs4 import BeautifulSoup
+from .bdriver import base_driver
 from .traversement import *
 from .start import *
 import time
@@ -10,7 +11,7 @@ import subprocess
 # cd C:\Users\Administrator\AppData\Local\Google\Chrome\Application
 # chrome.exe --remote-debugging-port=9222 --user-data-dir="C:\selenum\AutomationProfile"
 
-class smart_driver(object):
+class smart_driver(base_driver):
     by_choices = {'id': By.ID,
                   'class': By.CLASS_NAME,
                   'css': By.CSS_SELECTOR,
@@ -31,7 +32,7 @@ class smart_driver(object):
             self.driver = webdriver.Chrome(options=self.options, chrome_options=self.chrome_options)
         else:
             if is_port_in_use(port=port):
-                print('Process has already started')
+                print('[INFO]: Already driving...')
                 self.options.add_experimental_option("debuggerAddress", f"127.0.0.1:{port}")
                 self.driver = webdriver.Chrome(options=self.options)
             else:
