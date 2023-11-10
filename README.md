@@ -29,7 +29,7 @@ directly.
 
 
 ## Template
-TOFIX
+
 
 ### Related github repository
 
