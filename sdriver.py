@@ -19,6 +19,9 @@ class smart_driver(base_driver):
 
     def __init__(self, debug: bool = True, invisible: bool = True, port: str = '9222'):
         super(smart_driver, self).__init__()
+
+        base_driver.__init__(self)
+
         self.port = str(port)
         self.debug = debug
         self.options = webdriver.ChromeOptions()
