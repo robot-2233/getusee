@@ -5,3 +5,4 @@ gen
 build
 dist
 *.egg-info
+LICENSE.md
