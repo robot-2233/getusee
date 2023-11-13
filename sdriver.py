@@ -1,7 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from bs4 import BeautifulSoup
-from .bdriver import base_driver
+from .cupdate import WebdriverAutoUpdate
 from .traversement import *
 from .start import *
 import time
@@ -11,40 +11,45 @@ import subprocess
 # cd C:\Users\Administrator\AppData\Local\Google\Chrome\Application
 # chrome.exe --remote-debugging-port=9222 --user-data-dir="C:\selenum\AutomationProfile"
 
-class smart_driver(base_driver):
+class smart_driver():
     by_choices = {'id': By.ID,
                   'class': By.CLASS_NAME,
                   'css': By.CSS_SELECTOR,
                   'xpath': By.XPATH}
 
-    def __init__(self, debug: bool = True, invisible: bool = True, port: str = '9222'):
+    def __init__(self, debug: bool = True, invisible: bool = True, port: str = '9222', update: bool = False) -> None:
         super(smart_driver, self).__init__()
-
-        base_driver.__init__(self)
 
         self.port = str(port)
         self.debug = debug
+        self.sys = see_system()
         self.options = webdriver.ChromeOptions()
         self.chrome_options = webdriver.ChromeOptions()
+
+        self.chrome_driver_path = get_chromedriver_path(self.sys)
+        if update:
+            path = sys.executable
+            driver_directory = path.rsplit('\\', 1)[0] if '\\' in path else path
+            WebdriverAutoUpdate(driver_directory)
         if not debug:
             prefs = {"profile.managed_default_content_settings.images": 2, 'permissions.default.stylesheet': 2}
             self.chrome_options.add_experimental_option("prefs", prefs)
             if invisible:
                 self.chrome_options.add_argument('headless')
             self.options.add_experimental_option("debuggerAddress", f"127.0.0.1:{port}")
-            self.driver = webdriver.Chrome(options=self.options, chrome_options=self.chrome_options)
+            self.driver = webdriver.Chrome(options=self.options, chrome_options=self.chrome_options, executable_path=self.chrome_driver_path)
         else:
             if is_port_in_use(port=port):
                 print('[INFO]: Already driving...')
                 self.options.add_experimental_option("debuggerAddress", f"127.0.0.1:{port}")
-                self.driver = webdriver.Chrome(options=self.options)
+                self.driver = webdriver.Chrome(options=self.options, executable_path=self.chrome_driver_path)
             else:
-                chrome_path = get_chrome_path()
+                chrome_path = get_chrome_path(self.sys)
                 chrome_cmd = [chrome_path, '--remote-debugging-port=9222',
                               '--user-data-dir=C:\selenum\AutomationProfile']  # Custom browser user path
                 subprocess.Popen(chrome_cmd)
                 self.options.add_experimental_option("debuggerAddress", f"127.0.0.1:{port}")
-                self.driver = webdriver.Chrome(options=self.options)
+                self.driver = webdriver.Chrome(options=self.options, executable_path=self.chrome_driver_path)
 
     def __repr__(self):
         return f'Chrome Driver in {self.port}'
@@ -187,3 +192,5 @@ class smart_driver(base_driver):
             None
         """
         self.driver.quit()
+
+

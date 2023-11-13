@@ -13,12 +13,16 @@ CHROMEDRIVER_BASE_URL = "https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-tes
 LAST_KNOWN_GOOD_VERSIONS_URL = "https://googlechromelabs.github.io/chrome-for-testing/last-known-good-versions.json"
 
 
+# os.environ["http_proxy"] = "http://127.0.0.1:7890"
+# os.environ["https_proxy"] = "http://127.0.0.1:7890"
+
 class WebdriverAutoUpdate:
     def __init__(self, driver_directory):
         self.driver_directory = driver_directory
         self.current_os_platform = self.obtain_os()
         self.online_driver_version = self.get_latest_chromedriver_release()
         self.base_directory = os.path.dirname(os.path.abspath(__file__))
+        self.main()
 
     def obtain_os(self):
         """
@@ -59,7 +63,7 @@ class WebdriverAutoUpdate:
             downloaded_zip.extractall(path=self.driver_directory)
         os.remove(latest_driver_zip)
         self.transfer_chromedriver_file()
-        print(f"\nSuccessfully downloaded chromedriver version {self.online_driver_version} to:\n{driver_directory}")
+        print(f"\nSuccessfully downloaded chromedriver version {self.online_driver_version} to:\n{self.driver_directory}")
 
     def transfer_chromedriver_file(self):
         """
@@ -128,9 +132,9 @@ class WebdriverAutoUpdate:
         self.check_driver()
 
 
-if __name__ == '__main__':
-    # driver_directory = str(Path.home())
-    path = sys.executable
-    driver_directory = path.rsplit('\\', 1)[0] if '\\' in path else path
-    driver_manager = WebdriverAutoUpdate(driver_directory)
-    driver_manager.main()
+# if __name__ == '__main__':
+#     # driver_directory = str(Path.home())
+#     path = sys.executable
+#     driver_directory = path.rsplit('\\', 1)[0] if '\\' in path else path
+#     driver_manager = WebdriverAutoUpdate(driver_directory)
+#     print(driver_manager.driver_directory)

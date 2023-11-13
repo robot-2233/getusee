@@ -7,10 +7,8 @@
     However, to improve efficiency, please try to use select method and headless mode.
 """
 from .sdriver import smart_driver
-from .bdriver import base_checker
-from .cupdate import *
+from .cupdate import WebdriverAutoUpdate
 from .traversement import *
-from .selfcheck import *
 from .start import *
 
 __version__ = '1.0.0'
