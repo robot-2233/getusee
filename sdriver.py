@@ -3,7 +3,7 @@ from selenium.webdriver.common.by import By
 from bs4 import BeautifulSoup
 from .cupdate import WebdriverAutoUpdate
 from .traversement import *
-from .start import *
+from .common import *
 import time
 import subprocess
 
